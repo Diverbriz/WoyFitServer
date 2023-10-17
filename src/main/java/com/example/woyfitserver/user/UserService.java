@@ -44,13 +44,19 @@ public class UserService implements UserDetailsService {
     }
 
     public void saveUser(User user) {
-
-        user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
+        User user1 = userRepository.findByUsername(user.getUsername());
+        if(user1 != null){
+            user.setId(user1.getId());
+            userRepository.save(user);
+        }
+        else {
+            user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            userRepository.save(user);
+        }
     }
 
-    public boolean deleteUser(String userId) {
+    public boolean blockUser(String userId) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()) {
             user.get().setActiveAccount(false);

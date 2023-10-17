@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping(path = "/auth")
 public class AuthController {
@@ -28,13 +31,14 @@ public class AuthController {
     }
     @PostMapping(path = "/sign-up")
     public ResponseEntity<?> SignUp(@RequestBody SignUpRequest signUpRequest){
-//        UserDetails userDetails = userService.loadUserByUsername(signUpRequest.getUsername());
-
-            User user = new User(signUpRequest.getUsername(), signUpRequest.getPassword());
-////            Set<Role> roles = new HashSet<>();
-            userService.saveUser(user);
-            String token = jwtUtil.createToken(new User(signUpRequest.getUsername(), signUpRequest.getPassword()));
-            return ResponseEntity.ok(token);
+          User user = new User(signUpRequest.getUsername(), signUpRequest.getPassword());
+          userService.saveUser(user);
+//          User newUser = (User) userService.loadUserByUsername("username");
+          String token = jwtUtil.createToken(user);
+          Map<String, String> response = new HashMap<>();
+          response.put("token",token);
+          response.put("id", String.valueOf(user.getId()));
+          return ResponseEntity.ok(response);
     }
 
     @PostMapping(path = "/sign-in")

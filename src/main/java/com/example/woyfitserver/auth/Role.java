@@ -2,10 +2,12 @@ package com.example.woyfitserver.auth;
 
 import com.example.woyfitserver.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Set;
 
+@Getter
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {
@@ -14,7 +16,7 @@ public class Role implements GrantedAuthority {
     private Long id;
     private String name;
     @Transient
-    @ManyToMany(mappedBy = "user_roles")
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private Set<User> users;
 
     public Role(){}
@@ -28,24 +30,12 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<User> getUsers() {
-        return users;
     }
 
     public void setUsers(Set<User> users) {

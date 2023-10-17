@@ -22,7 +22,7 @@ public class JwtUtil {
     private final SecretKey jwtAccessSecret;
     private final long EXPIRATION_TIME = 9000000_000L;
 
-    public JwtUtil(@Value("${jwt-secret}") String JWT_SECRET){
+    public JwtUtil(@Value("${jwt.secret.access}") String JWT_SECRET){
         this.jwtAccessSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(JWT_SECRET));
     }
     public String extractUsername(String token) {
