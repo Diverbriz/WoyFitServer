@@ -42,7 +42,7 @@ public class JwtUtil {
 
     public String createToken(User user){
         final LocalDateTime now = LocalDateTime.now();
-        final Instant accessExpirationInstant = now.plusNanos(EXPIRATION_TIME).atZone(ZoneId.systemDefault()).toInstant();
+        final Instant accessExpirationInstant = now.plusMonths(12).atZone(ZoneId.of("Europe/Moscow")).toInstant();
         final Date accessExpiration = Date.from(accessExpirationInstant);
         return Jwts.builder()
                 .setSubject(user.getUsername())
