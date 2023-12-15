@@ -24,14 +24,6 @@ services:
       - "5433:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
-#  db:
-#    image: postgres:16.0-bullseye
-#    environment:
-#      POSTGRES_USER: postgres
-#      POSTGRES_PASSWORD: mrack2319
-#    volumes:
-#      - db-data:/var/lib/postgresql/data
-#    restart: unless-stopped
 
 volumes:
   db-data:

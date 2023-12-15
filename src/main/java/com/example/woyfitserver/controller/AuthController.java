@@ -65,6 +65,8 @@ public class AuthController {
 
         UserDetails userDetails = userService.loadUserByUsername(signInRequest.getUsername());
         String token = jwtUtil.createToken((User)userDetails);
-        return ResponseEntity.ok(token);
+        Map<String, String> response = new HashMap<>();
+        response.put("token", "Bearer " + token);
+        return ResponseEntity.ok(response);
     }
 }
