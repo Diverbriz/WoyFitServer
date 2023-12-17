@@ -1,9 +1,10 @@
 version: '3.8'
 
 services:
-  app:
+  woyfitServer:
     build:
       context: .
+    image: diverbriz/woyfit_server
     container_name: app
     depends_on:
       - db
