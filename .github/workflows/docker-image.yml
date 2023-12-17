@@ -30,12 +30,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build]
     steps:
-    - name: Log in to Yandex Cloud Registry
-      uses: docker/login-action@v3.0.0
-      with:
-        registry: cr.yandex
-        username: json_key
-        password: ${{ secrets.YC_KEYS }}
     - name: Deploy serverless container
       uses: yc-actions/yc-sls-container-deploy@v1
       with:
