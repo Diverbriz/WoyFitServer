@@ -48,9 +48,18 @@ public class UserService implements UserDetailsService {
         if(user1 != null){
             user.setId(user1.getId());
         }
+        initBaseRoles();
         user.setRoles(Collections.singleton(new Role(1L, "ROLE_USER")));
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userRepository.save(user);
+    }
+
+    public void initBaseRoles(){
+        Role role = roleRepository.findFirstByName("ROLE_USER");
+        if(role == null){
+            roleRepository.save(new Role(1L, "ROLE_USER"));
+        }
+
     }
 
     public boolean blockUser(String userId) {
