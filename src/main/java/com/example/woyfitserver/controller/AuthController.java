@@ -41,6 +41,7 @@ public class AuthController {
             return e.getMessage();
         }
     }
+
     @PostMapping(path = "/sign-up")
     public ResponseEntity<?> SignUp(@RequestBody SignUpRequest signUpRequest){
           User user = new User(signUpRequest.getUsername(), signUpRequest.getPassword());
