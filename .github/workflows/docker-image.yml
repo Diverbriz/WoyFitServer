@@ -7,11 +7,23 @@ on:
     branches: [ "master" ]
 
 jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
 
+    steps:
+    -  uses: actions/maven@v3
+    -  name: Add maven
+       run:
+         sudo apt update
+         sudo apt install maven
+    -  uses: actions/test@v3
+    -  name: Run test before build
+       run: mvn test -Dtest=WoyFitServerApplicationTests
   build:
     name: build
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
