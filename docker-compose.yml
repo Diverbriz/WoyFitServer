@@ -1,32 +1,83 @@
 version: '3.8'
 
 services:
+
+#  keycloak-postgres:
+#    image: library/postgres:${KC_POSTGRES_IMAGE_TAG:-14}
+#    container_name: ${POSTGRES_CONTAINER_NAME:-postgres}
+#    restart: on-failure
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: postgres
+#    healthcheck:
+#      test: pg_isready -d postgres
+#      interval: 10s
+#      timeout: 5s
+#      retries: 3
+#      start_period: 5s
+#    ports:
+#      - ${KC_POSTGRES_PORT_MAPPING:-5435}:5432
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 256M
+#
+#  keycloak:
+#      image: quay.io/keycloak/keycloak:20.0.2
+#      container_name: keycloak
+#      command:
+#        - start --auto-build --db postgres --hostname-strict-https false --hostname-strict false --proxy edge --http-enabled true --import-realm --spi-user-profile-legacy-user-profile-read-only-attributes *_RES_ACCESS_MODE
+#      environment:
+#        KC_DB_URL: jdbc:postgresql://keycloak-postgres:5432/postgres
+#        KC_DB_USERNAME: postgres
+#        KC_DB_PASSWORD: postgres
+#        KC_DB_SCHEMA: public
+#        KC_FEATURES: preview
+#        KEYCLOAK_ADMIN: admin
+#        KEYCLOAK_ADMIN_PASSWORD: admin
+#      volumes:
+#        - type: bind
+#          source: ./src/main/resources/keycloak/import/realm-export.json
+#          target: /opt/keycloak/data/import/realm-export.json
+#          read_only: true
+#      ports:
+#        - 8282:8080
+#      depends_on:
+#        keycloak-postgres:
+#          condition: service_healthy
+#      healthcheck:
+#        test: [ "CMD", "curl", "-f", "http://0.0.0.0:8080/realms/master" ]
+#        start_period: 10s
+#        interval: 30s
+#        retries: 3
+#        timeout: 5s
+
   woyfitServer:
     build:
       context: .
-    image: diverbriz/woyfit_server
+    image: woyfit_server
     container_name: app
-    depends_on:
-      - db
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/woyfit
-      - SPRING_DATASOURCE_USERNAME=vladimir
-      - SPRING_DATASOURCE_PASSWORD=mrack2319
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+#    depends_on:
+#      - db
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/woyfit
+#      - SPRING_DATASOURCE_USERNAME=vladimir
+#      - SPRING_DATASOURCE_PASSWORD=mrack2319
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
     ports:
-      - "8080:8080"
-    command:
-      - "mvn --batch-mode --update-snapshots verify"
-  db:
-    image: postgres:13.3
-    environment:
-      POSTGRES_DB: "woyfit"
-      POSTGRES_USER: "vladimir"
-      POSTGRES_PASSWORD: "mrack2319"
-    ports:
-      - "5433:5432"
-    volumes:
-      - db-data:/var/lib/postgresql/data
+      - "8080:8081"
+
+#  db:
+#    image: postgres:13.3
+#    environment:
+#      POSTGRES_DB: "woyfit"
+#      POSTGRES_USER: "vladimir"
+#      POSTGRES_PASSWORD: "mrack2319"
+#    ports:
+#      - "5433:5432"
+#    volumes:
+#      - db-data:/var/lib/postgresql/data
 
 volumes:
   db-data:
