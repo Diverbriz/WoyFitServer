@@ -43,8 +43,8 @@ public class SecurityConfig {
                                 .requestMatchers(PathRequest.toH2Console()).authenticated()
                                 .anyRequest().authenticated()
 //                        .requestMatchers("/auth/test", "/api/**").hasRole("USER")
-//                        .requestMatchers("/auth/**").anonymous()
-//                        .anyRequest().authenticated()
+                        .requestMatchers("/auth/**").anonymous()
+                        .anyRequest().authenticated()
                 ).addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
