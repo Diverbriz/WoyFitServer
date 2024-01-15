@@ -5,4 +5,5 @@ RUN mvn clean package -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
 COPY --from=builder /src/target/*.jar woyfit.jar
+EXPOSE $PORT
 ENTRYPOINT ["java", "-Dserver.port=${PORT}", "-jar", "woyfit.jar"]
